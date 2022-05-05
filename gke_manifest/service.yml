@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: halyard
+  namespace: halyard
+spec:
+  ports:
+    - port: 8064
+      targetPort: 8064
+      protocol: TCP
+  selector:
+    app: spin
+    stack: halyard

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: halyard
+  namespace: halyard
+  labels:
+    app: halyard
+    stack: halyard
+spec:
+  serviceName: halyard
+  replicas: 1
+  selector:
+    matchLabels:
+      app: halyard
+      stack: halyard
+  template:
+    metadata:
+      labels:
+        app: halyard
+        stack: halyard
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+      - name: halyard-daemon
+        image: asia-docker.pkg.dev/your-project-name/spinnaker/halyard:latest
+        imagePullPolicy: Always
+        readinessProbe:
+          exec:
+            command:
+            - wget
+            - -q
+            - --spider
+            - http://localhost:8064/health
+        resources:
+          requests:
+            cpu: 10m
+            memory: 256Mi
+        ports:
+        - containerPort: 8064

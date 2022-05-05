@@ -1,0 +1,7 @@
+resources:
+  - namespace.yml
+  - backend_config.yml
+  - api_ingress.yml
+  - gui_ingress.yml
+  - service.yml
+  - statefulset.yml
